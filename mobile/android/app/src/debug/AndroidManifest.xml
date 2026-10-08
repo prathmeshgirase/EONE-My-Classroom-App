@@ -1,0 +1,17 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Internet permission is required during development so that
+        the Flutter application can communicate with the local
+        Spring Boot backend.
+    -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--
+        Allow HTTP traffic only for the debug build.
+        Production deployments should use HTTPS.
+    -->
+    <application
+        android:usesCleartextTraffic="true" />
+
+</manifest>

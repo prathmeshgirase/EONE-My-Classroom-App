@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-eone}
+      POSTGRES_USER: ${POSTGRES_USER:-eone}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-eone}
+    ports:
+      - "5432:5432"
+    volumes:
+      - eone_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-eone} -d ${POSTGRES_DB:-eone}"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-eone}
+      DATABASE_USERNAME: ${POSTGRES_USER:-eone}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-eone}
+      EONE_JWT_SECRET: ${EONE_JWT_SECRET:-development-only-long-secret-development-only-long-secret-1234}
+      EONE_SEED_ENABLED: ${EONE_SEED_ENABLED:-true}
+      EONE_CORS_ORIGINS: ${EONE_CORS_ORIGINS:-http://localhost:8081}
+      EONE_STORAGE_DIRECTORY: /app/data/uploads
+    volumes:
+      - eone_uploads:/app/data/uploads
+    ports:
+      - "8081:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  eone_uploads:
+  eone_postgres:

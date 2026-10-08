@@ -1,0 +1,61 @@
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: never
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 11MB
+  application:
+    name: eone-backend
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/eone}
+    username: ${DATABASE_USERNAME:eone}
+    password: ${DATABASE_PASSWORD:eone}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+  jackson:
+    default-property-inclusion: non_null
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+eone:
+  mail:
+    enabled: ${EONE_MAIL_ENABLED:false}
+    from: ${MAIL_FROM:}
+    brevo-key: ${BREVO_API_KEY:}
+  push:
+    enabled: ${EONE_PUSH_ENABLED:false}
+  storage:
+    provider: ${EONE_STORAGE_PROVIDER:local}
+    directory: ${EONE_STORAGE_DIRECTORY:./data/uploads}
+    supabase:
+      url: ${SUPABASE_URL:}
+      bucket: ${SUPABASE_STORAGE_BUCKET:eone-private}
+      service-key: ${SUPABASE_SERVICE_KEY:}
+  jwt:
+    secret: ${EONE_JWT_SECRET:change-this-development-secret-to-a-long-random-value-before-production-0123456789}
+    access-minutes: ${EONE_JWT_ACCESS_MINUTES:30}
+    refresh-days: ${EONE_JWT_REFRESH_DAYS:30}
+  cors:
+    allowed-origins: ${EONE_CORS_ORIGINS:http://localhost:3000,http://localhost:8081}
+  seed:
+    enabled: ${EONE_SEED_ENABLED:false}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

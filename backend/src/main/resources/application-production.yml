@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+eone:
+  seed:
+    enabled: false
+  jwt:
+    secret: ${EONE_JWT_SECRET}
+  cors:
+    allowed-origins: ${EONE_CORS_ORIGINS}
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: never
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false

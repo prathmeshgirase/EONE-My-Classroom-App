@@ -1,0 +1,35 @@
+# secrets
+.env
+.env.*
+!.env.example
+*.iml
+*service-account*.json
+*firebase-adminsdk*.json
+mobile/android/key.properties
+docs/screenshots/supabase-storage.jpg
+*.pem
+*.jks
+*.keystore
+google-services.json
+GoogleService-Info.plist
+
+# Java
+backend/target/
+backend/data/uploads/
+data/uploads/
+*.log
+
+# Flutter
+mobile/.dart_tool/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/.packages
+mobile/build/
+mobile/.idea/
+mobile/android/local.properties
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

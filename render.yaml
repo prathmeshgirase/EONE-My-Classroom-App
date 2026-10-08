@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: eone-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /actuator/health/readiness
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: production
+      - key: EONE_SEED_ENABLED
+        value: false
+      - key: JAVA_TOOL_OPTIONS
+        value: -XX:MaxRAMPercentage=65
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_USERNAME
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
+      - key: EONE_JWT_SECRET
+        sync: false
+      - key: EONE_CORS_ORIGINS
+        sync: false
+      - key: EONE_STORAGE_PROVIDER
+        value: supabase
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_STORAGE_BUCKET
+        value: eone-private
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
