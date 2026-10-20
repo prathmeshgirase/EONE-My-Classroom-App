@@ -1,6 +1,6 @@
 package com.eone;
 
-import java.io.DataOutputStream;
+import java.nio.ByteBuffer;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -51,10 +51,9 @@ public final class DatabaseTlsDiagnostic {
                     socket.setSoTimeout(5000);
                     report(phase, "OK " + family);
                     phase = "postgres_ssl_request";
-                    DataOutputStream output = new DataOutputStream(socket.getOutputStream());
-                    output.writeInt(8);
-                    output.writeInt(80877103);
-                    output.flush();
+                    byte[] request = ByteBuffer.allocate(8).putInt(8).putInt(80877103).array();
+                    socket.getOutputStream().write(request);
+                    socket.getOutputStream().flush();
                     int response = socket.getInputStream().read();
                     if (response != 'S') {
                         report(phase, "UNEXPECTED_RESPONSE_BYTE=" + response + " " + family);
